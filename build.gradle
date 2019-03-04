@@ -1,0 +1,94 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+      //
+  }
+}
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11', transitive: true
+}
+
+mainClassName = "com.puzzles.Main"
+project.description = "15 puzzles"
+
+
+
+task copyFxmlTojar (type : Copy) {
+  into "$buildDir/classes/java/main/com/puzzles"
+  from "src/main/java/com/puzzles"
+  include "**/*.fxml"
+}
+
+
+task fatJar(dependsOn: 'copyFxmlTojar', type: Jar) {
+    manifest = project.manifest {
+      from sharedManifest()
+    }
+    classifier = 'full'
+    from {
+      configurations.compile.collect {
+        it.isDirectory() ? it : zipTree(it)
+      }
+    }
+    with jar
+}
+
+task copySchene (type : Copy) {
+    into "out/production/classes/com/puzzles"
+    from "src/main/java/com/puzzles"
+    include "**/*.fxml"
+}
+
+distZip.dependsOn 'fatJar', 'createDoc'
+distTar.dependsOn 'fatJar', 'createDoc'
+
+jar {
+  manifest = project.manifest {
+    from sharedManifest()
+  }
+}
+
+def sharedManifest() {
+  return manifest {
+    attributes('provider': 'gradle',
+            'Main-Class': 'com.puzzles.Main',
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version,
+            'Implementation-Description': project.description,
+            'Build-By': System.getProperty('user.name'),
+            'Build-JDK': System.getProperty('java.version'),
+            'Build-Time': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            'Source-Compatibility': project.sourceCompatibility,
+            'Target-Compatibility': project.targetCompatibility)
+  }
+}
+
+task createDoc(type: Copy){
+    from "$projectDir/src/main/recources"
+    into "$buildDir/libs"
+}
+
+def libFolder = file("$buildDir/libs")
+
+
+distributions {
+    main {
+        baseName = project.name
+        contents {
+            from libFolder
+            into "/$baseName"
+        }
+    }
+}
