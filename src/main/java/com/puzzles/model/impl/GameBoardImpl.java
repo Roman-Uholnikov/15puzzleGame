@@ -77,6 +77,11 @@ public class GameBoardImpl implements GameBoard {
         return tiles;
     }
 
+    @Override
+    public void setTiles(Set<Tile> tiles) {
+        this.tiles = tiles;
+    }
+
     private Tile getNextRandomMovableTile() {
         List<Tile> movable = tiles.stream().filter(Tile::isMovable).collect(Collectors.toList());
         Random ran = new Random();

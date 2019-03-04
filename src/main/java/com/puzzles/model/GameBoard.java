@@ -30,6 +30,8 @@ public interface GameBoard {
 
     Set<Tile> getTiles();
 
+    void setTiles(Set<Tile> tiles);
+
     Tile getTile(Integer cal, Integer row);
 
     Tile getTile(Pair<Integer, Integer> position);
