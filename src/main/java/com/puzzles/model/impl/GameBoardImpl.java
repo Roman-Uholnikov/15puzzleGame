@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 
 public class GameBoardImpl implements GameBoard {
 
-    private static final int SHUFFLE_COMPLEXITY = 5;
+    private static final int SHUFFLE_COMPLEXITY = 100;
     private static final int TILES_COUNT = 16;
 
     private Set<Tile> tiles = new HashSet<>();

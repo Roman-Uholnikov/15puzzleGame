@@ -13,7 +13,7 @@ Build:
 
 Run:
 ```bash
-java -jar build/libs/15Puzzle-gradle-0.0.1-SNAPSHOT-full.jar
+java -jar build/libs/15PuzzleName-0.0.1-SNAPSHOT-full.jar
 ```
 
 

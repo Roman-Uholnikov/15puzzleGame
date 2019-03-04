@@ -20,10 +20,9 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11', transitive: true
 }
 
-mainClassName = "com.puzzles.Main"
+mainClassName = "com.puzzles.MainScene"
 project.description = "15 puzzles"
-
-
+archivesBaseName = '15PuzzleName'
 
 task copyFxmlTojar (type : Copy) {
   into "$buildDir/classes/java/main/com/puzzles"
@@ -63,7 +62,7 @@ jar {
 def sharedManifest() {
   return manifest {
     attributes('provider': 'gradle',
-            'Main-Class': 'com.puzzles.Main',
+            'Main-Class': 'com.puzzles.MainScene',
             'Implementation-Title': project.name,
             'Implementation-Version': project.version,
             'Implementation-Description': project.description,
@@ -85,7 +84,7 @@ def libFolder = file("$buildDir/libs")
 
 distributions {
     main {
-        baseName = project.name
+        baseName = projects.name
         contents {
             from libFolder
             into "/$baseName"
