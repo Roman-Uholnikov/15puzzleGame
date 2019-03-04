@@ -53,6 +53,8 @@ public class MainScene extends Application {
         advise.setText("Click \"new game\"");
         newGame.setOnAction(event -> gameController.initNewGame());
         superHeroMode.setOnAction(event -> gameController.enableSuperHeroMod());
+
+        gameController.initNewGame();
     }
 
     public static void main(String[] args) {
